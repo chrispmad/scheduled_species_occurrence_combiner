@@ -56,6 +56,11 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
   # Ensure species' common names are Sentence case.
   pr_sp$name = stringr::str_to_sentence(pr_sp$name)
   
+  
+  if("Northern pike" %in% pr_sp$Species){
+    occ_dat_res_b = remove_native_nPike(pr_sp)
+  }
+  
   if(data == "species list"){
     return(pr_sp)
   } else {
@@ -101,7 +106,9 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       occ_dat_res_b = occ_dat_res_b |>
         dplyr::filter(!Species %in% c("Asian Carp","Grass Carp","Silver Carp","Black Carp",
                                       "Bighead Carp"))
-      
+      if("Northern pike" %in% pr_sp$Species){
+        occ_dat_res_b = remove_native_nPike(pr_sp)
+      }
       return(occ_dat_res_b)
     }
   }
