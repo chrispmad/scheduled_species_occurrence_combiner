@@ -2,6 +2,7 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
   
   pr_sp = readxl::read_excel(paste0(lan_root,"2 SCIENCE - Invasives/SPECIES/AIS_priority_species.xlsx"),
                              skip = 20)
+  
   names(pr_sp) <- c("group","status","name","genus","species")
   
   # If the user provides a reduced list of species (vector of full dataframe with column Species),
@@ -57,11 +58,12 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
   pr_sp$name = stringr::str_to_sentence(pr_sp$name)
   
   
-  if("Northern pike" %in% pr_sp$Species){
-    occ_dat_res_b = remove_native_nPike(pr_sp)
-  }
+  
   
   if(data == "species list"){
+    if("Northern pike" %in% pr_sp$Species){
+      pr_sp = remove_native_nPike(pr_sp)
+    }
     return(pr_sp)
   } else {
     if(!redo){
@@ -106,8 +108,9 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       occ_dat_res_b = occ_dat_res_b |>
         dplyr::filter(!Species %in% c("Asian Carp","Grass Carp","Silver Carp","Black Carp",
                                       "Bighead Carp"))
-      if("Northern pike" %in% pr_sp$Species){
-        occ_dat_res_b = remove_native_nPike(pr_sp)
+      if("Northern pike" %in% occ_dat_res_b$Species){
+        
+        occ_dat_res_b = remove_native_nPike(occ_dat_res_b)
       }
       return(occ_dat_res_b)
     }
