@@ -15,6 +15,12 @@ occs = gather_occurrence_records_for_pr_sp(
   excel_path = paste0(lan_root,"2 SCIENCE - Invasives/SPECIES/5_Incidental Observations/Master Incidence Report Records.xlsx")
 )
 
+# Ensure date column is properly formatted for all rows!
+occs = occs |> 
+  dplyr::mutate(Date = ifelse(stringr::str_detect(Date,"^[0-9]{5}$"), 
+                              as.character(openxlsx::convertToDate(Date)),
+                              Date))
+
 # Write out observations to LAN folder.
 sf::write_sf(
   occs,
