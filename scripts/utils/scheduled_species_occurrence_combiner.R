@@ -57,9 +57,6 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
   # Ensure species' common names are Sentence case.
   pr_sp$name = stringr::str_to_sentence(pr_sp$name)
   
-  
-  
-  
   if(data == "species list"){
     if("Northern pike" %in% pr_sp$Species){
       pr_sp = remove_native_nPike(pr_sp)
@@ -73,7 +70,7 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       # Do record search for all species of interest! This takes a minute.
       occ_dat_search_results = pr_sp$name |>
         lapply(\(x) {
-          tryCatch(bcinvadeR::grab_aq_occ_data(x, 
+          tryCatch(grab_aq_occ_data(x, 
                                                excel_path = excel_path),
                    error=function(e)return(NULL))
         })

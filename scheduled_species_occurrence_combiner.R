@@ -2,6 +2,7 @@
 source("scripts/utils/scheduled_species_occurrence_combiner.R")
 source("scripts/utils/native_northern_pike_f.R")
 library(dplyr)
+library(bcinvadeR)
 # Set up folder paths
 lan_root = "//SFP.IDIR.BCGOV/S140/S40203/RSD_ FISH & AQUATIC HABITAT BRANCH/General/"
 proj_wd = getwd()
