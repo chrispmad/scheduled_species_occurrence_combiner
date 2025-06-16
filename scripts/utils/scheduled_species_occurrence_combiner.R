@@ -85,7 +85,8 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
     # is present in 'priority_species_table.xlsx' file.
     occ_dat_res_b = occ_dat_res_b |>
       dplyr::mutate(Species = dplyr::case_when(
-        Species == 'Oriental weatherfish' ~ 'Oriental weather loach',
+        # Species == 'Oriental weatherfish' ~ 'Oriental weather loach',
+        Species == 'Oriental weather loach' ~ 'Oriental weatherfish',
         Species == 'Fathead minnow' ~ 'Rosy red fathead minnow',
         Species == 'Mosquitofish' ~ 'Western mosquitofish',
         Species %in% c('Pumpkinseed sunfish','Pumpkinseed Sunfish') ~ 'Pumpkinseed',
