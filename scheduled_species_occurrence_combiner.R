@@ -1,5 +1,5 @@
 # Read in function that does all this stuff.
-source("scripts/utils/scheduled_species_occurrence_combiner.R")
+source("scripts/utils/gather_occurrence_records_for_pr_sp.R")
 source("scripts/utils/native_northern_pike_f.R")
 library(dplyr)
 library(bcinvadeR)

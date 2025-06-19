@@ -39,8 +39,8 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       status = c('Provincial EDRR','Provincial EDRR','Management','Management','Management','Management',
                  'Provincial Containment','Provincial Containment','Provincial Containment','Management',
                  'Prevent'),
-      name = c('Oriental weatherfish','Fathead minnow','Pumpkinseed','Carp','Common Freshwater Jellyfish','Bluegill',
-               'Asiatic clam','Golden clam','Good luck clam','Yellow pickerel',
+      name = c('Oriental weather loach','Rosy red fathead minnow','Pumpkinseed sunfish','Carp','Common Freshwater Jellyfish','Bluegill sunfish',
+               'Asian clam','Golden clam','Good luck clam','Yellow pickerel',
                'Mosquitofish'),
       genus = c('Misgurnus','Pimephales','Lepomis','Cyprinus','Craspedacusta','Lepomis',
                 'Corbicula','Corbicula','Corbicula','Sander','Gambusia'),
@@ -87,13 +87,13 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       dplyr::mutate(Species = dplyr::case_when(
         # Species == 'Oriental weatherfish' ~ 'Oriental weather loach',
         Species == 'Oriental weather loach' ~ 'Oriental weatherfish',
-        Species == 'Fathead minnow' ~ 'Rosy red fathead minnow',
+        Species == 'Rosy red fathead minnow' ~ 'Fathead minnow',
         Species == 'Mosquitofish' ~ 'Western mosquitofish',
         Species %in% c('Pumpkinseed sunfish','Pumpkinseed Sunfish') ~ 'Pumpkinseed',
-        Species == 'Common freshwater jellyfish' ~ 'Freshwater jellyfish',
-        Species == 'Bluegill' ~ 'Bluegill sunfish',
+        Species == 'Common freshwater jellyfish' ~ 'Peach blossom jellyfish',
+        Species == 'Bluegill sunfish' ~ 'Bluegill',
         Species == 'Yellow pickerel' ~ 'Walleye',
-        Species %in% c("Asiatic clam","Golden clam","Good luck clam") ~ 'Asian clam',
+        Species %in% c("Asian clam","Golden clam","Good luck clam") ~ 'Asiatic clam',
         Species %in% c("Carp","European Carp","Common Carp") ~ "Common carp",
         T ~ Species
       ))
