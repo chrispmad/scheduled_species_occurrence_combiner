@@ -23,6 +23,8 @@ occs = occs |>
                               Date))
 
 # Write out observations to LAN folder.
+file.remove(paste0(lan_root,"2 SCIENCE - Invasives/SPECIES/5_Incidental Observations/AIS_occurrences_all_sources.gpkg"))
+
 sf::write_sf(
   occs,
   paste0(lan_root,"2 SCIENCE - Invasives/SPECIES/5_Incidental Observations/AIS_occurrences_all_sources.gpkg")
