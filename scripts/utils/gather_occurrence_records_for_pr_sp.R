@@ -36,17 +36,18 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       group = c('Fish','Fish','Fish','Fish','Other invertebrates','Fish',
                 'Other invertebrates','Other invertebrates',
                 'Other invertebrates','Other invertebrates',
+                'Other invertebrates',
                 'Fish','Fish'),
       status = c('Provincial EDRR','Provincial EDRR','Management','Management','Management','Management',
-                 'Provincial Containment','Provincial Containment','Provincial Containment','Management',
-                 'Provincial Containment','Prevent'),
+                 'Provincial Containment','Provincial Containment','Provincial Containment','Provincial Containment','Provincial Containment',
+                 'Management','Prevent'),
       name = c('Oriental weather loach','Rosy red fathead minnow','Pumpkinseed sunfish','Carp','Common Freshwater Jellyfish','Bluegill sunfish',
-               'Asian clam','Golden clam','Good luck clam','Asiatic clam','Yellow pickerel',
+               'Asian clam','Golden clam','Good luck clam','Asiatic clam','Corbicula clam','Yellow pickerel',
                'Mosquitofish'),
       genus = c('Misgurnus','Pimephales','Lepomis','Cyprinus','Craspedacusta','Lepomis',
-                'Corbicula','Corbicula','Corbicula','Corbicula','Sander','Gambusia'),
+                'Corbicula','Corbicula','Corbicula','Corbicula','Corbicula','Sander','Gambusia'),
       species = c('anguillicaudatus','promelas','gibbosus','carpio','sowerbyi','macrochirus',
-                  'fluminea','fluminea','fluminea','fluminea','vitreus','affinis')
+                  'fluminea','fluminea','fluminea','fluminea','fluminea','vitreus','affinis')
     )
   
   pr_sp = pr_sp |> 
@@ -94,7 +95,7 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
         Species == 'Common freshwater jellyfish' ~ 'Peach blossom jellyfish',
         Species == 'Bluegill sunfish' ~ 'Bluegill',
         Species == 'Yellow pickerel' ~ 'Walleye',
-        Species %in% c("Asian clam","Asiatic clam","Golden clam","Good luck clam") ~ 'Freshwater clam',
+        Species %in% c("Asian clam","Asiatic clam","Golden clam","Good luck clam","Corbicula clam","Freshwater clam") ~ 'Corbicula clam',
         Species %in% c("Carp","European Carp","Common Carp") ~ "Common carp",
         T ~ Species
       ))
