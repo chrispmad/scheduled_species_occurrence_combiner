@@ -27,7 +27,7 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
     dplyr::filter(group == 'Fish' | name %in% c("Whirling disease") | stringr::str_detect(name, '(mussel|crayfish|mystery snail|mudsnail|clam|jellyfish|shrimp|waterflea)')) |> 
     # Split out grouped species names into separate rows.
     dplyr::mutate(name = stringr::str_squish(name)) |>
-    dplyr::filter(name != 'Bullhead') |>
+    #dplyr::filter(name != 'Bullhead') |>
     dplyr::arrange(name)
   
   # Add a couple alternate ways of spelling species common names.
@@ -37,17 +37,17 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
                 'Other invertebrates','Other invertebrates',
                 'Other invertebrates','Other invertebrates',
                 'Other invertebrates',
-                'Fish','Fish'),
+                'Fish','Fish', 'Fish'),
       status = c('Provincial EDRR','Provincial EDRR','Management','Management','Management','Management',
                  'Provincial Containment','Provincial Containment','Provincial Containment','Provincial Containment','Provincial Containment',
-                 'Management','Prevent'),
+                 'Management','Prevent', 'Management'),
       name = c('Oriental weather loach','Rosy red fathead minnow','Pumpkinseed sunfish','Carp','Common Freshwater Jellyfish','Bluegill sunfish',
                'Asian clam','Golden clam','Good luck clam','Asiatic clam','Corbicula clam','Yellow pickerel',
-               'Mosquitofish'),
+               'Mosquitofish', 'Bullhead'),
       genus = c('Misgurnus','Pimephales','Lepomis','Cyprinus','Craspedacusta','Lepomis',
-                'Corbicula','Corbicula','Corbicula','Corbicula','Corbicula','Sander','Gambusia'),
+                'Corbicula','Corbicula','Corbicula','Corbicula','Corbicula','Sander','Gambusia', 'Ameiurus'),
       species = c('anguillicaudatus','promelas','gibbosus','carpio','sowerbyi','macrochirus',
-                  'fluminea','fluminea','fluminea','fluminea','fluminea','vitreus','affinis')
+                  'fluminea','fluminea','fluminea','fluminea','fluminea','vitreus','affinis', 'sp.')
     )
   
   pr_sp = pr_sp |> 
@@ -58,6 +58,16 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
   
   # Ensure species' common names are Sentence case.
   pr_sp$name = stringr::str_to_sentence(pr_sp$name)
+  
+  bullhead_line = data.frame(group = "Fish", 
+                             status = "Management", 
+                             name = "Bullhead", 
+                             genus = "Ameiurus", 
+                             species = "sp.",
+                             stringsAsFactors = FALSE)
+  pr_sp = pr_sp |>
+    dplyr::bind_rows(bullhead_line) |>
+    dplyr::arrange(name)
   
   if(data == "species list"){
     if("Northern pike" %in% pr_sp$Species){
