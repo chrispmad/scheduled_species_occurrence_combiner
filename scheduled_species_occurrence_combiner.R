@@ -1,6 +1,7 @@
 # Read in function that does all this stuff.
 source("scripts/utils/gather_occurrence_records_for_pr_sp.R")
 source("scripts/utils/native_northern_pike_f.R")
+source("scripts/utils/native_walleye_f.R")
 library(dplyr)
 library(bcinvadeR)
 # Set up folder paths
