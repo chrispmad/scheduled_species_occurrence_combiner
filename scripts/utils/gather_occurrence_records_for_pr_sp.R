@@ -119,6 +119,9 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       
       occ_dat_res_b = remove_native_nPike(occ_dat_res_b)
     }
+    if("Walleye" %in% occ_dat_res_b$Species){
+      occ_dat_res_b = remove_native_walleye(occ_dat_res_b)
+    }
     return(occ_dat_res_b)
   }
 }
