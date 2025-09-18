@@ -61,12 +61,22 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
   
   bullhead_line = data.frame(group = "Fish", 
                              status = "Management", 
-                             name = "Bullhead", 
+                             name = "Bullhead sp", 
                              genus = "Ameiurus", 
-                             species = "sp.",
+                             species = "sp",
                              stringsAsFactors = FALSE)
+  
+  bass_line = data.frame(group = "Fish", 
+                             status = "Management", 
+                             name = "Bass sp", 
+                             genus = "Micropterus", 
+                             species = "sp",
+                             stringsAsFactors = FALSE)
+  
+  
   pr_sp = pr_sp |>
     dplyr::bind_rows(bullhead_line) |>
+    dplyr::bind_rows(bass_line) |>
     dplyr::arrange(name)
   
   if(data == "species list"){
@@ -83,6 +93,54 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
                                   excel_path = excel_path),
                  error=function(e)return(NULL))
       })
+    
+    #query iNat for specific sets of genus that need to be user inputted like "Bullheads"
+    genus_search <- c("Ameiurus")
+    
+    genus_results <- lapply(genus_search, function(x)
+      rinat::get_inat_obs(
+        taxon_name = x,
+        place_id = "7085",
+        quality = "research",
+        maxresults = 10000
+      )
+    )
+    # list to dataframe
+    genus_df<- do.call(rbind, genus_results)
+    
+    genus_results_fixed<- genus_df |> 
+      dplyr::summarise(DataSource = 'iNaturalist',
+                                              Date = stringr::str_extract(observed_on, '[0-9]{4}-[0-9]{2}-[0-9]{2}'),
+                                              Species = common_name,
+                                              iNat_user = user_login,
+                                              iNat_report_id = id,
+                                              Location = place_guess,
+                                              latitude,
+                                              longitude) |>
+                             sf::st_as_sf(coords = c('longitude','latitude'),
+                                          crs = 4326)
+    
+    # Combine all results into one dataframe
+    genus_results <- bind_rows(genus_results, .id = "Genus")
+    
+#     rinat::get_inat_obs(taxon_id = common_names[3],
+#                         place_id = '7085',
+#                         quality = 'research',
+#                         maxresults = 10000) |>
+#       dplyr::filter(common_name %in% common_names) |>
+#       dplyr::summarise(DataSource = 'iNaturalist',
+#                        Date = stringr::str_extract(observed_on, '[0-9]{4}-[0-9]{2}-[0-9]{2}'),
+#                        Species = common_names[3],
+#                        iNat_user = user_login,
+#                        iNat_report_id = id,
+#                        Location = place_guess,
+#                        latitude,
+#                        longitude) |>
+#       sf::st_as_sf(coords = c('longitude','latitude'),
+#                    crs = 4326)
+#     ),
+# error = function(e) NULL
+# )
     
     occ_dat_res_b = dplyr::bind_rows(occ_dat_search_results)
     occ_dat_res_b = dplyr::mutate(occ_dat_res_b, Species = stringr::str_to_sentence(Species))
@@ -120,7 +178,7 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
       occ_dat_res_b = remove_native_nPike(occ_dat_res_b)
     }
     if("Walleye" %in% occ_dat_res_b$Species){
-      occ_dat_res_b = remove_native_walleye(occ_dat_res_b)
+      occ_dat_res_b = remove_native_walleye(occ_dat_res_b )
     }
     return(occ_dat_res_b)
   }
