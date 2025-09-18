@@ -7,7 +7,7 @@ library(bcinvadeR)
 # Set up folder paths
 lan_root = "//SFP.IDIR.BCGOV/S140/S40203/WFC AEB/General/"
 proj_wd = getwd()
-onedrive_wd = paste0(stringr::str_extract(getwd(),"C:/Users/[A-Z]+/"),"OneDrive - Government of BC/data/")
+onedrive_wd = "//SFP.IDIR.BCGOV/S140/S40203/WFC AEB/General/2 SCIENCE - Invasives/AIS_R_Projects/LargeDataFiles/CNF/"
 
 occs = gather_occurrence_records_for_pr_sp(
   lan_root = lan_root,
