@@ -109,7 +109,7 @@ gather_occurrence_records_for_pr_sp = function(lan_root, onedrive_wd, data = c("
     genus_df<- do.call(rbind, genus_results)
     
     genus_results_fixed<- genus_df |> 
-      dplyr::summarise(DataSource = 'iNaturalist',
+      dplyr::reframe(DataSource = 'iNaturalist',
                                               Date = stringr::str_extract(observed_on, '[0-9]{4}-[0-9]{2}-[0-9]{2}'),
                                               Species = common_name,
                                               iNat_user = user_login,
